@@ -1,4 +1,4 @@
 # Parcial Práctico 2
 
-- Nombre:
-- código:
+- Nombre: Juan Esteban Pineros Barrera
+- código: 202412232
