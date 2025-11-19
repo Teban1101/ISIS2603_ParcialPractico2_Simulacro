@@ -3,9 +3,8 @@ import { Ingredient } from '../Ingredient';
 
 @Component({
   selector: 'app-ingredient-list',
-  standalone: false,
   templateUrl: './ingredient-list.component.html',
-  styleUrl: './ingredient-list.component.css',
+  styleUrls: ['./ingredient-list.component.css'], // Corrección: styleUrls debe ser array
 })
 export class IngredientListComponent implements OnInit {
   @Input() ingredients: Ingredient[] = [];

@@ -1,11 +1,11 @@
-<ul>
-  @for (ingredient of ingredients; track ingredient.nombre){
-
-  <li>
-    <span>{{ ingredient.nombre }}</span>
-    @if (ingredient.cantidad) {
-    <span> - {{ ingredient.cantidad }} {{ ingredient.unidad }}</span>
-    }
+<!-- Lista de ingredientes simple.
+     Nota Punto 3: No maneja enrutamiento; sólo imprime cada ingrediente.
+     Se usa *ngFor y *ngIf estándar para evitar sintaxis inválida. -->
+<ul class="small mb-0">
+  <li *ngFor="let ing of ingredients">
+    <span>{{ ing.nombre || ing.name }}</span>
+    <span *ngIf="ing.cantidad || ing.quantity">
+      - {{ ing.cantidad || ing.quantity }} {{ ing.unidad || ing.unit }}
+    </span>
   </li>
-  }
 </ul>

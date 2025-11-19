@@ -1,23 +1,60 @@
-<div class="recipe-detail">
-  <h2>{{ recipe.nombre }}</h2>
-  <img
-    class="recipe-detail-img"
-    [src]="recipe.imagen"
-    alt="{{ recipe.imagen }}"
-  />
-  <p><strong>Porciones:</strong> {{ recipe.porciones }}</p>
-  <p><strong>Tiempo:</strong> {{ recipe.tiempo_minutos }} min</p>
-  <h3>Ingredientes</h3>
-  <app-ingredient-list
-    [ingredients]="recipe.ingredientes"
-  ></app-ingredient-list>
+<!--
+  Vista: Detalle de Receta (/recipe/:id)
+  --------------------------------------
+  Objetivo Punto 3:
+   - Mostrar información con una maquetación limpia estilo card ampliada.
+   - Incluir botón para regresar al listado (/recipe).
+   - No manejar rutas internas para ingredientes: simplemente se listan.
+-->
+<div class="container py-4" *ngIf="recipe as r">
+  <h3 class="text-center mb-4">Recetas uniandes</h3>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="row g-4">
+        <!-- Columna Imagen -->
+        <div class="col-12 col-md-5">
+          <img
+            class="img-fluid rounded border"
+            [src]="r.imagen"
+            [alt]="r.nombre"
+            style="object-fit: cover; width:100%; max-height:360px;"
+          />
+        </div>
 
-  <h3>Pasos</h3>
-  <ol>
-    @for(step of recipe.pasos; track step){
-    <li>
-      {{ step }}
-    </li>
-    }
-  </ol>
+        <!-- Columna Datos -->
+        <div class="col-12 col-md-7">
+          <h4 class="mb-3">{{ r.nombre }}</h4>
+          <div class="d-flex flex-wrap gap-3 small mb-3">
+            <span><strong>Porciones:</strong> {{ r.porciones }}</span>
+            <span><strong>Tiempo:</strong> {{ r.tiempo_minutos }} min</span>
+            <span><strong>Dificultad:</strong> {{ r.dificultad }}</span>
+            <span><strong>Tipo:</strong> {{ r.tipo }}</span>
+          </div>
+
+          <!-- Ingredientes -->
+          <h6 class="border-bottom pb-2 mt-3">Ingredientes</h6>
+            <!-- Punto 4: ingrediente más usado -->
+            <div class="mb-2">
+              <span class="fw-bold text-danger">Ingrediente más usado:</span>
+              {{ getMostUsedIngredient() }}
+            </div>
+          <app-ingredient-list [ingredients]="r.ingredientes"></app-ingredient-list>
+
+          <!-- Pasos -->
+          <h6 class="border-bottom pb-2 mt-4">Pasos</h6>
+          <ol class="small">
+            <li *ngFor="let step of r.pasos">{{ step }}</li>
+          </ol>
+
+          <!-- Botón volver -->
+          <div class="mt-4">
+            <button class="btn btn-secondary" routerLink="/recipe">Regresar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Mensaje si aún no hay datos (carga lenta / error) -->
+<div class="container py-5 text-center text-muted" *ngIf="!recipe">Cargando detalle...</div>
